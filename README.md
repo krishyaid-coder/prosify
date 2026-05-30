@@ -118,9 +118,9 @@ A model that scores high on (1) but low on (2) has reward-hacked into blanket st
 
 - [x] **v1 dataset** (551 preference pairs, 18 categories) - published on Kaggle
 - [x] **Adversarial held-out set** (40 examples, 5 categories) - published with v1.1
-- [ ] **Train/val/test splits** of the main dataset
-- [ ] **Baseline classifier** (DeBERTa) demonstrating dataset signal
-- [ ] **HuggingFace dataset mirror**
+- [x] **Train/val/test splits** of the main dataset
+- [x] **Baseline classifier** (DeBERTa) demonstrating dataset signal
+- [x] **HuggingFace dataset mirror**
 - [ ] **DPO fine-tuning** of a small base model (Qwen 2.5 1.5B or similar)
 - [ ] **Comprehensive evaluation** — win rate, adversarial preservation, information preservation
 - [ ] **Trained model release** on HuggingFace
