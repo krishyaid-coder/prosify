@@ -1,8 +1,11 @@
 # Prosify
 
+**🤗 Hugging Face Collection:** [Prosify on Hugging Face](https://huggingface.co/collections/krishy-d/prosify-correcting-formatting-bias-in-llms)
+
+
 **Correcting formatting bias in large language models.**
 
-Prosify is a research project tackling the systematic over-formatting habit that contemporary LLMs develop through RLHF — defaulting to bullet points, bold headers, and templated structures even when flowing prose would serve the reader better. This repository is the home of the project's code, the FormatBench dataset, and (eventually) a trained model that fixes the problem.
+Prosify is a research project tackling the systematic over-formatting habit that contemporary LLMs develop through RLHF, defaulting to bullet points, bold headers, and templated structures even when flowing prose would serve the reader better. This repository is the home of the project's code, the FormatBench dataset, and (eventually) a trained model that fixes the problem.
 
 ## Status
 
