@@ -108,8 +108,8 @@ Generation was assisted by large language models with human curation and review.
 
 For meaningful evaluation of a model fine-tuned on this dataset, use both metrics:
 
-1. **Win rate on a held-out test split of the main dataset** — does the trained model produce more appropriate prose where the main dataset taught it to?
-2. **Adversarial preservation rate on the held-out set** — does the trained model still produce structured responses where structure
+1. **Win rate on a held-out test split of the main dataset**: Does the trained model produce more appropriate prose where the main dataset taught it to?
+2. **Adversarial preservation rate on the held-out set** : Does the trained model still produce structured responses where structure
 genuinely helps?
 
 A model that scores high on (1) but low on (2) has reward-hacked into blanket structure-removal and is weaker than the base model in practice.
@@ -128,10 +128,10 @@ and the adversarial held-out set (40 examples, gold = structure):
 
 | Metric | Base model | Trained model | Gold response |
 |---|---|---|---|
-| **Test split — bullets per response** | 2.16 | **0.53** | 0.00 |
-| **Test split — headers per response** | 0.59 | **0.00** | 0.00 |
-| **Adversarial — bullets per response** | 9.35 | **6.60** | 8.18 |
-| **Adversarial — headers per response** | 0.78 | **0.30** | 3.38 |
+| **Test split: bullets per response** | 2.16 | **0.53** | 0.00 |
+| **Test split: headers per response** | 0.59 | **0.00** | 0.00 |
+| **Adversarial: bullets per response** | 9.35 | **6.60** | 8.18 |
+| **Adversarial: headers per response** | 0.78 | **0.30** | 3.38 |
 
 ### Honest interpretation
 
