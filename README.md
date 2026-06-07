@@ -1,8 +1,5 @@
 # Prosify
 
-**🤗 Hugging Face Collection:** [Prosify on Hugging Face](https://huggingface.co/collections/krishy-d/prosify-correcting-formatting-bias-in-llms)
-
-
 **Correcting formatting bias in large language models.**
 
 Prosify is a research project tackling the systematic over-formatting habit that contemporary LLMs develop through RLHF, defaulting to bullet points, bold headers, and templated structures even when flowing prose would serve the reader better. This repository is the home of the project's code, the FormatBench dataset, and (eventually) a trained model that fixes the problem.
@@ -51,7 +48,7 @@ The contrast between the two files is intentional. The main dataset teaches the 
 ## Where to get the dataset
 
 - **Kaggle (canonical for now):** https://www.kaggle.com/datasets/techiekd/formatbench-llm-formatting-bias-dataset
-- **HuggingFace:** [coming soon]
+- **HuggingFace:** **🤗 Hugging Face Collection:** [Prosify on Hugging Face](https://huggingface.co/collections/krishy-d/prosify-correcting-formatting-bias-in-llms)
 - **GitHub mirror (this repo):** `data/`
 
 All three sources contain identical files. The Kaggle and HuggingFace versions are convenient for direct download or `datasets.load_dataset()`; the GitHub mirror serves as the project's source of truth and audit trail.
@@ -125,7 +122,7 @@ A model that scores high on (1) but low on (2) has reward-hacked into blanket st
 - [x] **Baseline classifier** (DeBERTa) demonstrating dataset signal
 - [x] **HuggingFace dataset mirror**
 - [ ] **DPO fine-tuning** of a small base model (Qwen 2.5 1.5B or similar)
-- [ ] **Comprehensive evaluation** — win rate, adversarial preservation, information preservation
+- [ ] **Comprehensive evaluation**: win rate, adversarial preservation, information preservation
 - [ ] **Trained model release** on HuggingFace
 - [ ] **Paper-style writeup**
 
