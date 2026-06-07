@@ -2,14 +2,14 @@
 
 **Correcting formatting bias in large language models.**
 
-Prosify is a research project tackling the systematic over-formatting habit that contemporary LLMs develop through RLHF, defaulting to bullet points, bold headers, and templated structures even when flowing prose would serve the reader better. This repository is the home of the project's code, the FormatBench dataset, and (eventually) a trained model that fixes the problem.
+Prosify is a research project tackling the systematic over-formatting habit that contemporary LLMs develop through RLHF — defaulting to bullet points, bold headers, and templated structures even when flowing prose would serve the reader better. This repository is the home of the project's code, the FormatBench dataset, and a trained model that fixes the problem.
 
 ## Status
 
 **Phase 1 complete:** FormatBench v1.1 dataset published on Kaggle
-**Phase 2 in progress:** Train/val/test splits, baseline experiments
-**Phase 3 planned:** DPO fine-tuning + evaluation
-**Phase 4 planned:** Trained model release on HuggingFace, paper-style writeup
+**Phase 2 complete:** Train/val/test splits, baseline experiments
+**Phase 3 complete:** DPO fine-tuning + evaluation
+**Phase 4 complete:** Trained model release on HuggingFace, paper-style writeup
 
 ## The problem
 
@@ -114,6 +114,56 @@ genuinely helps?
 
 A model that scores high on (1) but low on (2) has reward-hacked into blanket structure-removal and is weaker than the base model in practice.
 
+## v1 training results
+
+A DPO + LoRA fine-tune of Qwen 2.5 1.5B-Instruct on the FormatBench training set
+produced the first Prosify trained model. The LoRA adapter is published as
+[krishy-d/prosify_qwen_1.5b_lora](https://huggingface.co/krishy-d/prosify_qwen_1.5b_lora)
+and grouped with the dataset in the [Prosify Hugging Face Collection](https://huggingface.co/collections/krishy-d/prosify-correcting-formatting-bias-in-llms).
+
+### Headline results
+
+Structural metrics measured on the held-out test split (49 examples, gold = prose)
+and the adversarial held-out set (40 examples, gold = structure):
+
+| Metric | Base model | Trained model | Gold response |
+|---|---|---|---|
+| **Test split — bullets per response** | 2.16 | **0.53** | 0.00 |
+| **Test split — headers per response** | 0.59 | **0.00** | 0.00 |
+| **Adversarial — bullets per response** | 9.35 | **6.60** | 8.18 |
+| **Adversarial — headers per response** | 0.78 | **0.30** | 3.38 |
+
+### Honest interpretation
+
+**What v1 achieved:** On prose-appropriate contexts (the main test split), the
+trained model reduced bullet usage by 75% (2.16 → 0.53) and eliminated markdown
+headers entirely. This is a real, measurable shift toward the gold prose style.
+
+**What v1 didn't achieve:** On the adversarial set — where structured responses
+are the correct answer — the trained model preserved most structure (6.60 bullets
+vs base 9.35 vs gold 8.18) but drifted *below* gold, indicating mild reward
+hacking. The model is slightly over-generalizing the "use less structure"
+preference into contexts where structure helps.
+
+This matches the failure mode predicted by the baseline classifier finding
+(100% test / 1.2% adversarial). The reward-hacking trap is real but appears in
+mild form rather than catastrophic form, suggesting that more capacity (higher
+LoRA rank) and a tighter KL leash (higher β) would close the remaining gap.
+
+### Loading the trained model
+
+```python
+from peft import PeftModel
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+base = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2.5-1.5B-Instruct")
+tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-1.5B-Instruct")
+model = PeftModel.from_pretrained(base, "krishy-d/prosify_qwen_1.5b_lora")
+```
+
+Full evaluation notebook with all metrics and side-by-side samples:
+[`notebooks/dpo_03_evaluate.ipynb`](notebooks/dpo_03_evaluate.ipynb)
+
 ## Roadmap
 
 - [x] **v1 dataset** (551 preference pairs, 18 categories) - published on Kaggle
@@ -121,10 +171,12 @@ A model that scores high on (1) but low on (2) has reward-hacked into blanket st
 - [x] **Train/val/test splits** of the main dataset
 - [x] **Baseline classifier** (DeBERTa) demonstrating dataset signal
 - [x] **HuggingFace dataset mirror**
-- [ ] **DPO fine-tuning** of a small base model (Qwen 2.5 1.5B or similar)
-- [ ] **Comprehensive evaluation**: win rate, adversarial preservation, information preservation
-- [ ] **Trained model release** on HuggingFace
-- [ ] **Paper-style writeup**
+- [x] **DPO fine-tuning** of a small base model (Qwen 2.5 1.5B or similar)
+- [x] **Comprehensive evaluation** — win rate, adversarial preservation, information preservation
+- [x] **Trained model release** on HuggingFace
+- [x] **Paper-style writeup**
+- [ ] **v2 dataset** — multi-author voices, scale to ~2000 examples
+- [ ] **v2 training** — higher LoRA rank, tuned hyperparameters, closing the adversarial gap
 
 ## Limitations
 
