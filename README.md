@@ -48,7 +48,7 @@ The contrast between the two files is intentional. The main dataset teaches the 
 ## Where to get the dataset
 
 - **Kaggle (canonical for now):** https://www.kaggle.com/datasets/techiekd/formatbench-llm-formatting-bias-dataset
-- **HuggingFace:** **🤗 Hugging Face Collection:** [Prosify on Hugging Face](https://huggingface.co/collections/krishy-d/prosify-correcting-formatting-bias-in-llms)
+- **Hugging Face Collection:** [Prosify on Hugging Face](https://huggingface.co/collections/krishy-d/prosify-correcting-formatting-bias-in-llms)
 - **GitHub mirror (this repo):** `data/`
 
 All three sources contain identical files. The Kaggle and HuggingFace versions are convenient for direct download or `datasets.load_dataset()`; the GitHub mirror serves as the project's source of truth and audit trail.
